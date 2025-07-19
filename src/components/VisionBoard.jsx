@@ -43,15 +43,14 @@ const VisionCard = ({ content, initialPos, scatteredPos, isScattered, color, ind
 };
 
 // VisionBoard Component: The main container for the vision board.
-const VisionBoard = () => {
+const VisionBoard = () => { // Renamed from VisionBoard to App for default export consistency
   // State to control whether the cards are scattered or bundled.
-  // Initialize to false so cards start bundled and then animate to scattered.
+  // Initialize to false so cards start bundled.
   const [isScattered, setIsScattered] = useState(false);
   // Ref to attach to the VisionBoard container.
   const visionBoardRef = useRef(null);
 
   // Define the initial and scattered positions for each card.
-  // Using the original fixed scattered positions for a more controlled effect.
   const cardData = [
     {
       id: 1,
@@ -111,33 +110,27 @@ const VisionBoard = () => {
     },
   ];
 
-  // Effect hook to trigger the scattering animation on component mount.
-  useEffect(() => {
-    // Set a timeout to change isScattered to true after a short delay (e.g., 500ms).
-    // This creates the initial animation from the bundled state to the scattered state.
-    const timer = setTimeout(() => {
-      setIsScattered(true);
-    }, 500); // Adjust this delay as needed for the desired animation start
+  // Removed useEffect for page load animation.
+  // Animation will now be controlled by hover events.
 
-    // Cleanup function: Clear the timeout if the component unmounts before the timer fires.
-    return () => clearTimeout(timer);
-  }, []); // Empty dependency array ensures this effect runs only once on mount.
+  // Determine heading style based on isScattered state
+  const headingStyle = isScattered
+    ? { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
+    : { top: '10%', left: '50%', transform: 'translateX(-50%)' };
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 font-inter">
       <div
         ref={visionBoardRef}
-        className="relative w-full max-w-7xl h-[620px] bg-white rounded-3xl shadow-lg overflow-hidden"
+        className="relative w-full max-w-7xl h-[620px] bg-white rounded-3xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out"
         style={{ perspective: '1200px' }} // Retained perspective for a subtle 3D effect
+        onMouseEnter={() => setIsScattered(true)} // Scatter cards on mouse enter
+        onMouseLeave={() => setIsScattered(false)} // Bundle cards on mouse leave
       >
-        {/* The heading is absolutely positioned and centered both horizontally and vertically */}
+        {/* The heading is absolutely positioned and its style changes based on isScattered */}
         <h2
-          className="absolute text-4xl font-extrabold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-blue-200 to-yellow-300 z-20"
-          style={{
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
+          className="absolute text-4xl font-extrabold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-blue-200 to-yellow-300 z-20 transition-all duration-1000 ease-in-out"
+          style={headingStyle}
         >
           Our Company Vision
         </h2>
@@ -147,7 +140,7 @@ const VisionBoard = () => {
             content={card.content}
             initialPos={card.initialPos}
             scatteredPos={card.scatteredPos}
-            isScattered={isScattered} // This will now be true after the timeout, triggering animation
+            isScattered={isScattered} // Controlled by hover state
             color={card.color}
             index={index} // Pass index for z-indexing
           />
@@ -157,4 +150,4 @@ const VisionBoard = () => {
   );
 };
 
-export default VisionBoard;
+export default VisionBoard; // Exporting VisionBoard as default
