@@ -3,10 +3,10 @@ import { ChevronLeft, ChevronRight, Laptop, TrendingUp, Globe, Lightbulb, Zap, S
 
 function LandingHero() {
   const images = [
-    'https://placehold.co/1000x600/A7F3D0/10B981?text=Innovation', // Greenish
-    'https://placehold.co/1000x600/93C5FD/2563EB?text=Creativity', // Bluish
-    'https://placehold.co/1000x600/FDBA74/EA580C?text=Excellence', // Orangish
-    'https://placehold.co/1000x600/FECDD3/E11D48?text=Future',     // Reddish
+    'https://placehold.co/500x600/A7F3D0/10B981?text=Innovation', // Greenish
+    'https://placehold.co/500x600/93C5FD/2563EB?text=Creativity', // Bluish
+    'https://placehold.co/500x600/FDBA74/EA580C?text=Excellence', // Orangish
+    'https://placehold.co/500x600/FECDD3/E11D48?text=Future',     // Reddish
   ];
 
   const industries = [
